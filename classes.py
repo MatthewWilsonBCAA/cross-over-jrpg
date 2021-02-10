@@ -33,3 +33,10 @@ class Object(pygame.sprite.Sprite):
         super(Object, self).__init__()
         self.surf = pygame.image.load("sprites/tiles/basic_tile.png").convert()
         self.rect = self.surf.get_rect(center=pos)
+
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, pos):
+        super(Player, self).__init__()
+        self.surf = pygame.image.load("sprites/tiles/player_tile.png").convert()
+        self.rect = self.surf.get_rect(center=pos)
