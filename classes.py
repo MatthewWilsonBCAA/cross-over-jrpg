@@ -29,14 +29,14 @@ from pygame.locals import (
 
 
 class Object(pygame.sprite.Sprite):
-    def __init__(self, pos):
+    def __init__(self, pos, tile):
         super(Object, self).__init__()
-        self.surf = pygame.image.load("sprites/tiles/basic_tile.png").convert()
+        self.surf = pygame.image.load("sprites/tiles/" + tile + ".png").convert_alpha()
         self.rect = self.surf.get_rect(center=pos)
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
         super(Player, self).__init__()
-        self.surf = pygame.image.load("sprites/tiles/player_tile.png").convert()
+        self.surf = pygame.image.load(r"sprites/entities/player.png").convert_alpha()
         self.rect = self.surf.get_rect(center=pos)
