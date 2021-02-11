@@ -1,8 +1,7 @@
 test_arena = [
     ((0, 0), "backgrounds/dark_stone", False),
-    ((0, 500), "backgrounds/dark_stone", False),
     ((500, 0), "backgrounds/dark_stone", False),
-    ((500, 500), "backgrounds/dark_stone", False),
+    ((500, -500), "backgrounds/dark_stone", False),
     ((0, -500), "backgrounds/dark_stone", False),
     ((-500, 0), "backgrounds/dark_stone", False),
     ((-500, -500), "backgrounds/dark_stone", False),
@@ -10,4 +9,8 @@ test_arena = [
     ((225, -388), "basic_tile", True),
     ((150, -388), "basic_tile", True),
     ((75, -388), "basic_tile", True),
+    ((300, -588), "basic_tile", True),
+    ((225, -588), "basic_tile", True),
+    ((150, -588), "basic_tile", True),
+    ((75, -588), "basic_tile", True),
 ]
