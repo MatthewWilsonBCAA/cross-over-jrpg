@@ -13,7 +13,6 @@ for obj in test_arena:
     test_sprite = Object(obj[0], obj[1])
     all_sprites.add(test_sprite)
     if obj[2]:
-        print("WHAT THE HELL")
         walls.add(test_sprite)
 
 screen_fustrum = [[0, SCREEN_HEIGHT], [SCREEN_WIDTH, 0]]
