@@ -44,4 +44,6 @@ class Player(pygame.sprite.Sprite):
 class Fighter(pygame.sprite.Sprite):
     def __init__(self, pos, hp, max_hp, move_list):
         super(Fighter, self).__init__()
-        #allocate stats and stuff
+        self.hp = hp
+        self.max_hp = max_hp
+        self.move_list = move_list
