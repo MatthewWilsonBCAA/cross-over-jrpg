@@ -10,6 +10,8 @@ pygame.display.set_caption("Cross-over JRPG")
 
 running = True
 
+is_battle = False
+
 player = Player((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
 all_sprites = pygame.sprite.Group()
 walls = pygame.sprite.Group()
@@ -21,10 +23,11 @@ for obj in test_arena:
 
 screen_fustrum = [[0, SCREEN_HEIGHT], [SCREEN_WIDTH, 0]]
 
+
 while running:
     screen.fill((0, 0, 0))
     pressed_keys = pygame.key.get_pressed()
-    if pressed_keys[K_w]:
+    if not is_battle and pressed_keys[K_w]:
         screen_fustrum[0][1] += MOVEMENT_SPEED
         screen_fustrum[1][1] += MOVEMENT_SPEED
         for wall in walls:
@@ -35,7 +38,7 @@ while running:
             if HITS:
                 screen_fustrum[0][1] -= MOVEMENT_SPEED
                 screen_fustrum[1][1] -= MOVEMENT_SPEED
-    if pressed_keys[K_s]:
+    if not is_battle and pressed_keys[K_s]:
         screen_fustrum[0][1] -= MOVEMENT_SPEED
         screen_fustrum[1][1] -= MOVEMENT_SPEED
         for wall in walls:
@@ -46,7 +49,7 @@ while running:
             if HITS:
                 screen_fustrum[0][1] += MOVEMENT_SPEED
                 screen_fustrum[1][1] += MOVEMENT_SPEED
-    if pressed_keys[K_a]:
+    if not is_battle and pressed_keys[K_a]:
         screen_fustrum[0][0] += MOVEMENT_SPEED
         screen_fustrum[1][0] += MOVEMENT_SPEED
         for wall in walls:
@@ -57,7 +60,7 @@ while running:
             if HITS:
                 screen_fustrum[0][0] -= MOVEMENT_SPEED
                 screen_fustrum[1][0] -= MOVEMENT_SPEED
-    if pressed_keys[K_d]:
+    if not is_battle and pressed_keys[K_d]:
         screen_fustrum[0][0] -= MOVEMENT_SPEED
         screen_fustrum[1][0] -= MOVEMENT_SPEED
         for wall in walls:
@@ -73,6 +76,8 @@ while running:
         if event.type == QUIT:
             running = False
     for sprite in all_sprites:
+        if is_battle:
+            break
         isk = False
         le = sprite.rect.left
         ye = sprite.rect.bottom

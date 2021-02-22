@@ -40,3 +40,8 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__()
         self.surf = pygame.image.load(r"sprites/entities/player.png").convert_alpha()
         self.rect = self.surf.get_rect(center=pos)
+
+class Fighter(pygame.sprite.Sprite):
+    def __init__(self, pos, hp, max_hp, move_list):
+        super(Fighter, self).__init__()
+        #allocate stats and stuff
