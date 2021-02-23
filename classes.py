@@ -1,6 +1,6 @@
 import pygame
 from constants import *
-
+from random import random
 pygame.init()
 
 from pygame.locals import (
@@ -27,6 +27,7 @@ from pygame.locals import (
     MOUSEBUTTONDOWN,
 )
 
+font = pygame.font.SysFont("Consolas", 20)
 
 class Object(pygame.sprite.Sprite):
     def __init__(self, pos, tile):
@@ -42,8 +43,34 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=pos)
 
 class Fighter(pygame.sprite.Sprite):
-    def __init__(self, pos, hp, max_hp, move_list):
+    def __init__(self, pos, hp, max_hp, strength, power, defense, move_list):
         super(Fighter, self).__init__()
         self.hp = hp
         self.max_hp = max_hp
+        self.strength = strength
+        self.power = power
+        self.defense = defense
         self.move_list = move_list
+        self.surf = pygame.image.load(r"sprites/entities/player.png").convert_alpha()
+        self.rect = self.surf.get_rect(center=pos)
+
+    def use_move(self, input, enemy_defense):
+        move = self.move_list[input-1]
+        m_type = move[0]
+        if m_type == 0 or m_type == 1:
+            if random() * 100 < move[2]:
+                if m_type == 0:
+                    stat = self.strength
+                else:
+                    stat = self.power
+                dmg = move[1] * (stat / 100)
+                b = enemy_defense / dmg
+                return dmg - (dmg * (enemy_defense / (75 + 50 * b)))
+            else:
+                return "f"
+        elif m_type == 3:
+            self.hp += move[1] * (self.power // 100)
+            if self.hp > self.max_hp:
+                self.hp = self.max_hp
+            return "h"
+
