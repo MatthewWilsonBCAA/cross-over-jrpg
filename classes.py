@@ -1,6 +1,6 @@
 import pygame
 from constants import *
-from random import random
+import random
 pygame.init()
 
 from pygame.locals import (
@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=pos)
 
 class Fighter(pygame.sprite.Sprite):
-    def __init__(self, pos, hp, max_hp, strength, power, defense, move_list):
+    def __init__(self, pos, hp, max_hp, strength, power, defense, move_list, image):
         super(Fighter, self).__init__()
         self.hp = hp
         self.max_hp = max_hp
@@ -51,14 +51,14 @@ class Fighter(pygame.sprite.Sprite):
         self.power = power
         self.defense = defense
         self.move_list = move_list
-        self.surf = pygame.image.load(r"sprites/entities/player.png").convert_alpha()
+        self.surf = pygame.image.load(r"sprites/entities/"+image).convert_alpha()
         self.rect = self.surf.get_rect(center=pos)
 
     def use_move(self, input, enemy_defense):
         move = self.move_list[input-1]
         m_type = move[0]
         if m_type == 0 or m_type == 1:
-            if random() * 100 < move[2]:
+            if random.random() * 100 < move[2]:
                 if m_type == 0:
                     stat = self.strength
                 else:
@@ -67,7 +67,7 @@ class Fighter(pygame.sprite.Sprite):
                 b = enemy_defense / dmg
                 return dmg - (dmg * (enemy_defense / (75 + 50 * b)))
             else:
-                return "f"
+                return 0
         elif m_type == 3:
             self.hp += move[1] * (self.power // 100)
             if self.hp > self.max_hp:
