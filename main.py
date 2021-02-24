@@ -1,6 +1,6 @@
 from classes import *
 from worlds import *
-import moves
+import basecharacters
 import copy
 import time
 
@@ -27,15 +27,6 @@ for obj in test_arena:
 
 screen_fustrum = [[0, SCREEN_HEIGHT], [SCREEN_WIDTH, 0]]
 
-base_entity = [
-    500,
-    500,
-    40,
-    60,
-    20,
-    [moves.FireBall, moves.Rage, moves.CloseCombat, moves.IceBeam],
-    ["dragon_front.png", "dragon_back.png"]
-]
 e_player = None
 enemy = None
 while running:
@@ -44,25 +35,27 @@ while running:
     if not is_battle and pressed_keys[K_b]:
         is_battle = True
         # initializes entities
+        ep = list(basecharacters.dragon)
+        ee = list(basecharacters.ladybug)
         e_player = Fighter(
             (200, SCREEN_HEIGHT - 200),
-            base_entity[0],
-            base_entity[1],
-            base_entity[2],
-            base_entity[3],
-            base_entity[4],
-            base_entity[5],
-            base_entity[6][1]
+            ep[0],
+            ep[1],
+            ep[2],
+            ep[3],
+            ep[4],
+            ep[5],
+            ep[6][1]
         )
         enemy = Fighter(
             (SCREEN_WIDTH - 200, 200),
-            base_entity[0],
-            base_entity[1],
-            base_entity[2],
-            base_entity[3],
-            base_entity[4],
-            base_entity[5],
-            base_entity[6][0]
+            ee[0],
+            ee[1],
+            ee[2],
+            ee[3],
+            ee[4],
+            ee[5],
+            ee[6][0]
         )
     if not is_battle and pressed_keys[K_w]:
         screen_fustrum[0][1] += MOVEMENT_SPEED
