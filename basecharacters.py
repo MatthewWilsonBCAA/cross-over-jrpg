@@ -6,7 +6,7 @@ dragon = [
     100,
     20,
     [moves.FireBall, moves.Rage, moves.CloseCombat, moves.IceBeam],
-    ["dragon_front.png", "dragon_back.png"]
+    ["dragon_front.png", "dragon_back.png", "Fire Dragon"]
 ]
 ladybug = [
     355,
@@ -15,5 +15,6 @@ ladybug = [
     40,
     75,
     [moves.FireBall, moves.Rage, moves.CloseCombat, moves.IceBeam],
-    ["ladybug_front.png", "ladybug_back.png"]   
+    ["ladybug_front.png", "ladybug_back.png", "Ladybug"]   
 ]
+#add pepe

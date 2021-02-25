@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=pos)
 
 class Fighter(pygame.sprite.Sprite):
-    def __init__(self, pos, hp, max_hp, strength, power, defense, move_list, image):
+    def __init__(self, pos, hp, max_hp, strength, power, defense, move_list, image, name):
         super(Fighter, self).__init__()
         self.hp = hp
         self.max_hp = max_hp
@@ -53,6 +53,7 @@ class Fighter(pygame.sprite.Sprite):
         self.move_list = move_list
         self.surf = pygame.image.load(r"sprites/entities/"+image).convert_alpha()
         self.rect = self.surf.get_rect(center=pos)
+        self.name = name
 
     def use_move(self, input, enemy_defense):
         move = self.move_list[input-1]
@@ -73,4 +74,17 @@ class Fighter(pygame.sprite.Sprite):
             if self.hp > self.max_hp:
                 self.hp = self.max_hp
             return "h"
+
+class AttackAnimation(pygame.sprite.Sprite):
+    def __init__(self, image, style, pos):
+        super(AttackAnimation, self).__init__()
+        self.surf = pygame.image.load(r"sprites/attacks/"+image).convert_alpha()
+        self.rect = self.surf.get_rect(center=pos)
+        self.style = style
+        self.timer = 0
+    
+    def play_animation(self):
+        self.timer += 1
+        if self.timer == 250:
+            return 1
 

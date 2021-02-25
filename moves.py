@@ -3,6 +3,6 @@
 """
 
 FireBall = (1, 80, 95, "Fire Ball")
-Rage = (0, 110, 70, "Rage")
+Rage = (0, 110, 60, "Rage")
 CloseCombat = (0, 90, 90, "Close Combat")
 IceBeam = (1, 70, 100, "Ice Beam")

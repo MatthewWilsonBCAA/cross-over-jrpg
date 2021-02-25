@@ -15,6 +15,10 @@ running = True
 
 is_battle = False
 attack_timer = 0
+e_damage = 0
+damage = 0
+is_player_turn = True
+battle_state_text = "Your turn!"
 
 player = Player((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
 all_sprites = pygame.sprite.Group()
@@ -45,7 +49,8 @@ while running:
             ep[3],
             ep[4],
             ep[5],
-            ep[6][1]
+            ep[6][1],
+            ep[6][2]
         )
         enemy = Fighter(
             (SCREEN_WIDTH - 200, 200),
@@ -55,7 +60,8 @@ while running:
             ee[3],
             ee[4],
             ee[5],
-            ee[6][0]
+            ee[6][0],
+            ee[6][2]
         )
     if not is_battle and pressed_keys[K_w]:
         screen_fustrum[0][1] += MOVEMENT_SPEED
@@ -160,9 +166,9 @@ while running:
             f"2. {e_player.move_list[1][3]}",
             f"1. {e_player.move_list[0][3]}",
             f"{e_player.hp} / {e_player.max_hp}",
-            "Player",
+            f"{e_player.name}",
         ]
-        enemy_texts = [f"{enemy.hp} / {enemy.max_hp}", "Enemy"]
+        enemy_texts = [f"{enemy.name}",f"{enemy.hp} / {enemy.max_hp}"]
         ty = 100
         for text in player_texts:
             screen.blit(
@@ -174,17 +180,10 @@ while running:
         for text in enemy_texts:
             screen.blit(font.render(text, True, (255, 255, 0)), (100, ty))
             ty += 25
-        if attack_timer > 0:
-            if damage == 0:
-                screen.blit(
-                    font.render("Missed!", True, (255, 255, 0)),
-                    (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),
-                )
-            attack_timer -= 1
-        if attack_timer == 250:
-            choice = random.randint(1,4)
-            e_damage = enemy.use_move(choice, e_player.defense)
-            e_player.hp -= int(e_damage)
+        screen.blit(
+            font.render(battle_state_text, True, (255, 255, 0)),
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),
+        )
         attack_input = None
         if pressed_keys[K_1]:
             attack_input = 1
@@ -194,14 +193,46 @@ while running:
             attack_input = 3
         if pressed_keys[K_4]:
             attack_input = 4
+        if attack_timer == 0:
+            battle_state_text = "Your turn!"
         if attack_input and attack_timer == 0:
-            damage = e_player.use_move(attack_input, enemy.defense)
-            # print(damage)
-            enemy.hp -= int(damage)
-            if enemy.hp <= 0:
-                is_battle = False
+            battle_state_text = "Your turn!"
             attack_timer = 500
-            # time.sleep(2)
+            damage = 0
+            damage = e_player.use_move(attack_input, enemy.defense)
+            if damage > 0:
+                anim = AttackAnimation("splatter.png", 0, (enemy.rect.x + 100, enemy.rect.y + 100))
+            else:
+                damage = 0
+                anim = None
+                is_player_turn = False
+        if attack_timer > 0:
+            if anim:
+                finish = anim.play_animation()
+                screen.blit(anim.surf, anim.rect)
+                if finish == 1:
+                    enemy.hp -= int(damage)
+                    damage = 0
+                    finish = 0
+                    is_player_turn = False
+            if not is_player_turn:
+                battle_state_text = "Their turn..."
+                choice = random.randint(1,4)
+                e_damage = enemy.use_move(choice, e_player.defense)
+                if e_damage > 0:
+                    anim = AttackAnimation("splatter.png", 0, (e_player.rect.x + 100, e_player.rect.y + 100))
+                else:
+                    e_damage = 0
+                    anim = None
+                is_player_turn = True
+            if e_damage > 0 and attack_timer == 1:
+                e_player.hp -= int(e_damage)
+                if e_player.hp <= 0:
+                    running = False
+            attack_timer -= 1
+        if attack_timer == 1:
+            battle_state_text = "Your turn!"
+            e_player.hp -= int(e_damage)
 
     pygame.display.flip()
     clock.tick(FRAME_RATE)
