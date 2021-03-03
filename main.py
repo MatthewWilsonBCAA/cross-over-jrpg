@@ -201,7 +201,7 @@ while running:
             damage = 0
             damage = e_player.use_move(attack_input, enemy.defense)
             if damage > 0:
-                anim = AttackAnimation("splatter.png", 0, (enemy.rect.x + 100, enemy.rect.y + 100))
+                anim = AttackAnimation(e_player.move_list[attack_input-1][5], 0, (enemy.rect.x + 100, enemy.rect.y + 100), e_player.move_list[attack_input-1][4])
             else:
                 damage = 0
                 anim = None
@@ -212,6 +212,8 @@ while running:
                 screen.blit(anim.surf, anim.rect)
                 if finish == 1:
                     enemy.hp -= int(damage)
+                    if enemy.hp <= 0:
+                        is_battle = False
                     damage = 0
                     finish = 0
                     is_player_turn = False
@@ -220,7 +222,7 @@ while running:
                 choice = random.randint(1,4)
                 e_damage = enemy.use_move(choice, e_player.defense)
                 if e_damage > 0:
-                    anim = AttackAnimation("splatter.png", 0, (e_player.rect.x + 100, e_player.rect.y + 100))
+                    anim = AttackAnimation(enemy.move_list[choice-1][5], 0, (e_player.rect.x + 100, e_player.rect.y + 100), enemy.move_list[choice-1][4])
                 else:
                     e_damage = 0
                     anim = None

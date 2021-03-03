@@ -76,15 +76,32 @@ class Fighter(pygame.sprite.Sprite):
             return "h"
 
 class AttackAnimation(pygame.sprite.Sprite):
-    def __init__(self, image, style, pos):
+    def __init__(self, image, style, pos, anim):
         super(AttackAnimation, self).__init__()
         self.surf = pygame.image.load(r"sprites/attacks/"+image).convert_alpha()
+        self.const_surf = self.surf
+        self.const_pos = pos
         self.rect = self.surf.get_rect(center=pos)
         self.style = style
         self.timer = 0
+        self.anim = anim
     
     def play_animation(self):
         self.timer += 1
+        if self.anim == 1:
+            if self.timer % 5 == 0:
+                self.surf = pygame.transform.scale(self.const_surf, (100, 100))
+            if self.timer % 15 == 0:
+                self.surf = pygame.transform.scale(self.const_surf, (64, 64))
+                self.rect.x = random.randint(self.const_pos[0]-100, self.const_pos[0])
+                self.rect.y = random.randint(self.const_pos[1]-100, self.const_pos[1])
+        if self.anim == 2:
+            self.surf = pygame.transform.rotate(self.const_surf, int(self.timer*7.5))
+        if self.anim == 3:
+            self.surf = pygame.transform.rotate(self.const_surf, int(self.timer*2))
+            e = int(self.timer/250)
+            self.surf = pygame.transform.scale(self.surf, (128-e,128-e))
         if self.timer == 250:
+            self.rect = self.surf.get_rect(center=self.const_pos)
             return 1
 
