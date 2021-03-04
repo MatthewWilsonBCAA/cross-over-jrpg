@@ -101,6 +101,12 @@ class AttackAnimation(pygame.sprite.Sprite):
             self.surf = pygame.transform.rotate(self.const_surf, int(self.timer*2))
             e = int(self.timer/250)
             self.surf = pygame.transform.scale(self.surf, (128-e,128-e))
+        if self.anim == 4:
+            if self.timer % 50==0 or self.timer < 2:
+                self.rect.x = self.const_pos[0]-150
+                self.rect.y = self.const_pos[1]-250
+            self.rect.x = self.rect.x+4
+            self.rect.y = self.rect.y+6
         if self.timer == 250:
             self.rect = self.surf.get_rect(center=self.const_pos)
             return 1

@@ -39,7 +39,7 @@ while running:
     if not is_battle and pressed_keys[K_b]:
         is_battle = True
         # initializes entities
-        ep = list(basecharacters.dragon)
+        ep = list(basecharacters.pepe)
         ee = list(basecharacters.ladybug)
         e_player = Fighter(
             (200, SCREEN_HEIGHT - 200),
@@ -185,6 +185,7 @@ while running:
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),
         )
         attack_input = None
+        pressed_keys = pygame.key.get_pressed()
         if pressed_keys[K_1]:
             attack_input = 1
         if pressed_keys[K_2]:
@@ -195,7 +196,7 @@ while running:
             attack_input = 4
         if attack_timer == 0:
             battle_state_text = "Your turn!"
-        if attack_input and attack_timer == 0:
+        if attack_input and attack_timer < 1:
             battle_state_text = "Your turn!"
             attack_timer = 500
             damage = 0
@@ -213,16 +214,18 @@ while running:
                 if finish == 1:
                     enemy.hp -= int(damage)
                     if enemy.hp <= 0:
+                        attack_timer = 0
+                        anim = None
                         is_battle = False
                     damage = 0
                     finish = 0
                     is_player_turn = False
-            if not is_player_turn:
+            if not is_player_turn and attack_timer <= 250 and attack_timer > 0:
                 battle_state_text = "Their turn..."
                 choice = random.randint(1,4)
                 e_damage = enemy.use_move(choice, e_player.defense)
                 if e_damage > 0:
-                    anim = AttackAnimation(enemy.move_list[choice-1][5], 0, (e_player.rect.x + 100, e_player.rect.y + 100), enemy.move_list[choice-1][4])
+                    anim = AttackAnimation(enemy.move_list[choice-1][5], 0, (e_player.rect.x + 150, e_player.rect.y + 150), enemy.move_list[choice-1][4])
                 else:
                     e_damage = 0
                     anim = None
@@ -234,7 +237,7 @@ while running:
             attack_timer -= 1
         if attack_timer == 1:
             battle_state_text = "Your turn!"
-            e_player.hp -= int(e_damage)
+            #e_player.hp -= int(e_damage)
 
     pygame.display.flip()
     clock.tick(FRAME_RATE)
