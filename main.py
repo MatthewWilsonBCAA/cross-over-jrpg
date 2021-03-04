@@ -24,23 +24,23 @@ player = Player((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
 all_sprites = pygame.sprite.Group()
 walls = pygame.sprite.Group()
 for obj in test_arena:
-    test_sprite = Object(obj[0], obj[1])
+    test_sprite = Object(obj[0], obj[1], obj[2])
     all_sprites.add(test_sprite)
-    if obj[2]:
-        walls.add(test_sprite)
+    walls.add(test_sprite)
 
 screen_fustrum = [[0, SCREEN_HEIGHT], [SCREEN_WIDTH, 0]]
 
 e_player = None
 enemy = None
+battle_chance = 0
 while running:
     screen.fill((0, 0, 0))
     pressed_keys = pygame.key.get_pressed()
-    if not is_battle and pressed_keys[K_b]:
+    if not is_battle and battle_chance==BATTLE_CHANCE-1:
         is_battle = True
         # initializes entities
-        ep = list(basecharacters.pepe)
-        ee = list(basecharacters.ladybug)
+        ep = list(basecharacters.charizard)
+        ee = list(basecharacters.character_list[random.randint(0, len(basecharacters.character_list)-1)])
         e_player = Fighter(
             (200, SCREEN_HEIGHT - 200),
             ep[0],
@@ -63,6 +63,7 @@ while running:
             ee[6][0],
             ee[6][2]
         )
+        battle_chance = 0
     if not is_battle and pressed_keys[K_w]:
         screen_fustrum[0][1] += MOVEMENT_SPEED
         screen_fustrum[1][1] += MOVEMENT_SPEED
@@ -76,9 +77,11 @@ while running:
                 )
             )
             HITS = pygame.sprite.collide_rect(player, temp)
-            if HITS:
+            if HITS and temp.coll:
                 screen_fustrum[0][1] -= MOVEMENT_SPEED
                 screen_fustrum[1][1] -= MOVEMENT_SPEED
+            elif HITS and not temp.coll:
+                battle_chance=random.randint(0, BATTLE_CHANCE)
     if not is_battle and pressed_keys[K_s]:
         screen_fustrum[0][1] -= MOVEMENT_SPEED
         screen_fustrum[1][1] -= MOVEMENT_SPEED
@@ -92,9 +95,11 @@ while running:
                 )
             )
             HITS = pygame.sprite.collide_rect(player, temp)
-            if HITS:
+            if HITS and temp.coll:
                 screen_fustrum[0][1] += MOVEMENT_SPEED
                 screen_fustrum[1][1] += MOVEMENT_SPEED
+            elif HITS and not temp.coll:
+                battle_chance=random.randint(0, BATTLE_CHANCE)
     if not is_battle and pressed_keys[K_a]:
         screen_fustrum[0][0] += MOVEMENT_SPEED
         screen_fustrum[1][0] += MOVEMENT_SPEED
@@ -108,9 +113,11 @@ while running:
                 )
             )
             HITS = pygame.sprite.collide_rect(player, temp)
-            if HITS:
+            if HITS and temp.coll:
                 screen_fustrum[0][0] -= MOVEMENT_SPEED
                 screen_fustrum[1][0] -= MOVEMENT_SPEED
+            elif HITS and not temp.coll:
+                battle_chance=random.randint(0, BATTLE_CHANCE)
     if not is_battle and pressed_keys[K_d]:
         screen_fustrum[0][0] -= MOVEMENT_SPEED
         screen_fustrum[1][0] -= MOVEMENT_SPEED
@@ -124,9 +131,11 @@ while running:
                 )
             )
             HITS = pygame.sprite.collide_rect(player, temp)
-            if HITS:
+            if HITS and temp.coll:
                 screen_fustrum[0][0] += MOVEMENT_SPEED
                 screen_fustrum[1][0] += MOVEMENT_SPEED
+            elif HITS and not temp.coll:
+                battle_chance=random.randint(0, BATTLE_CHANCE)
     # print(screen_fustrum)
     for event in pygame.event.get():
         if event.type == QUIT:

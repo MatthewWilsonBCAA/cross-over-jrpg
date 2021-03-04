@@ -18,11 +18,23 @@ ladybug = [
     ["ladybug_front.png", "ladybug_back.png", "Ladybug"]   
 ]
 pepe = [
+    200,
+    200,
     120,
     120,
-    180,
-    180,
     20,
     [moves.SolarFlare, moves.Rage, moves.StarVolley, moves.CloseCombat],
     ["pepe.png", "pepe.png", "Pepe the Frog"]
 ]
+
+charizard = [
+    420,
+    420,
+    90,
+    115,
+    18,
+    [moves.SolarFlare, moves.FireBall, moves.CloseCombat, moves.Rage],
+    ["charizard_front.png", "charizard_back.png", "Charizard"]
+]
+
+character_list = [ladybug, dragon, pepe, charizard]

@@ -30,10 +30,11 @@ from pygame.locals import (
 font = pygame.font.SysFont("Consolas", 20)
 
 class Object(pygame.sprite.Sprite):
-    def __init__(self, pos, tile):
+    def __init__(self, pos, tile, coll):
         super(Object, self).__init__()
         self.surf = pygame.image.load("sprites/tiles/" + tile + ".png").convert_alpha()
         self.rect = self.surf.get_rect(center=pos)
+        self.coll = coll
 
 
 class Player(pygame.sprite.Sprite):
