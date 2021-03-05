@@ -39,7 +39,7 @@ while running:
     if not is_battle and battle_chance==BATTLE_CHANCE-1:
         is_battle = True
         # initializes entities
-        ep = list(basecharacters.charizard)
+        ep = list(basecharacters.pepe)
         ee = list(basecharacters.character_list[random.randint(0, len(basecharacters.character_list)-1)])
         e_player = Fighter(
             (200, SCREEN_HEIGHT - 200),

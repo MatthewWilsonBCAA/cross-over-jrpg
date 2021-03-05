@@ -92,6 +92,8 @@ class AttackAnimation(pygame.sprite.Sprite):
         if self.anim == 1:
             if self.timer % 5 == 0:
                 self.surf = pygame.transform.scale(self.const_surf, (100, 100))
+            if self.timer % 10 == 0:
+                self.surf = pygame.transform.scale(self.const_surf, (80, 80))
             if self.timer % 15 == 0:
                 self.surf = pygame.transform.scale(self.const_surf, (64, 64))
                 self.rect.x = random.randint(self.const_pos[0]-100, self.const_pos[0])
@@ -108,6 +110,8 @@ class AttackAnimation(pygame.sprite.Sprite):
                 self.rect.y = self.const_pos[1]-250
             self.rect.x = self.rect.x+4
             self.rect.y = self.rect.y+6
+            e = int(self.timer/250)
+            self.surf = pygame.transform.scale(self.surf, (128+e,128+e))
         if self.timer == 250:
             self.rect = self.surf.get_rect(center=self.const_pos)
             return 1

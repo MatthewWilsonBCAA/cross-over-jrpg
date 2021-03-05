@@ -23,7 +23,7 @@ pepe = [
     120,
     120,
     20,
-    [moves.SolarFlare, moves.Rage, moves.StarVolley, moves.CloseCombat],
+    [moves.SolarFlare, moves.IceBeam, moves.StarVolley, moves.CloseCombat],
     ["pepe.png", "pepe.png", "Pepe the Frog"]
 ]
 
